@@ -7,6 +7,7 @@ def includeme(config):
     config.include('h.views.home')
     config.include('h.views.main')
     config.include('h.views.client')
+    config.include('h.views.widgets')
 
     # homepage
     config.add_route('index', '/')
@@ -21,6 +22,9 @@ def includeme(config):
     config.add_route('help', '/docs/help')
     config.add_route('onboarding', '/welcome/')
     config.add_route('custom_onboarding', '/welcome/{slug}')
+
+    # shared widgets
+    config.add_route('widgets.navbar', '/widgets/navbar')
 
     # main
     config.add_route('annotation',

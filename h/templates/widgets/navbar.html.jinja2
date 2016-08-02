@@ -1,0 +1,42 @@
+{% from '../includes/dropdown_menu.html.jinja2' import dropdown_menu %}
+
+{% if feature('activity_pages') %}
+<header class="nav-bar">
+  <div class="nav-bar__content">
+    <a href="/" title="Hypothesis homepage"><!--
+      !--><img alt="Hypothesis logo" class="nav-bar__logo" src="/assets/images/logo.svg"></a>
+
+    <div class="nav-bar__search">
+      <form class="search-bar" action="{{ request.route_url("activity.search") }}">
+        <input class="search-bar__input" name="q" value="{{ q }}" placeholder="Search…">
+        {{ svg_icon('search', 'search-bar__icon') }}
+      </form>
+    </div>
+
+    <div class="u-stretch"></div>
+
+    <div class="nav-bar-links">
+      {% if username %}
+      <a class="nav-bar-links__item"
+         href="{{ username_link }}">
+        {{ username }}
+      </a>
+      {% call dropdown_menu(groups_menu_items, title='Groups') %}
+        <a class="nav-bar-links__item js-dropdown-menu-link"
+           href="">Groups</a>
+      {% endcall %}
+      {% call dropdown_menu(settings_menu_items, title='Settings', footer_item=signout_item) %}
+        <a class="nav-bar-links__item js-dropdown-menu-link"
+           href="{{ request.route_url("account") }}"
+           title="Settings">
+          {{ svg_icon('settings') }}
+      </a>
+      {% endcall %}
+      {% else %}
+      <a class="nav-bar-links__item" href="{{ request.route_url('login') }}">Log in</a>
+      <a class="nav-bar-links__item" href="{{ request.route_url('signup') }}">Sign up</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+{% endif %}

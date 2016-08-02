@@ -1,11 +1,37 @@
 # -*- coding: utf-8 -*-
 
+from functools import partial
+
+from jinja2 import Markup
+from pyramid.request import Request
 
 from h import __version__
 from h import emails
 from h import mailer
 from h.api import storage
 from h.notification import reply
+
+def render_view(request, name):
+    """
+    Helper for rendering a view within another view.
+
+    This can be used to render a reusable widget across multiple pages or share
+    a widget
+
+    The rendered sub-view will use the same cookies, host and other properties
+    as the parent request.
+
+    :param name: The name of the route to render
+    """
+
+    # Copy the original request to inherit the authenticated user, host and
+    # other attributes.
+    #
+    # Adapted from http://stackoverflow.com/a/24199503/434243
+    req = request.copy_get()
+    req.path_info = request.route_path(name)
+    response = request.invoke_subrequest(req, use_tweens=True)
+    return Markup(response.ubody)
 
 
 def add_renderer_globals(event):
@@ -23,6 +49,10 @@ def add_renderer_globals(event):
             event['ga_cookie_domain'] = "none"
         else:
             event['ga_cookie_domain'] = "auto"
+
+    # Add a helper which can be used to render reusable views in the middle of
+    # another response
+    event['render_view'] = partial(render_view, request)
 
 
 def publish_annotation_event(event):
