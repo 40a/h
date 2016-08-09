@@ -20,24 +20,32 @@
 
     <div class="nav-bar-links">
       {% if username %}
-      <a class="nav-bar-links__item"
+      <a class="nav-bar-links__item nav-bar-links__link"
          href="{{ username_link }}">
         {{ username }}
       </a>
+      <span class="nav-bar-links__item">
       {% call dropdown_menu(groups_menu_items, title='Groups') %}
-        <a class="nav-bar-links__item js-dropdown-menu-link"
-           href="">Groups</a>
+        <a class="nav-bar-links__link" href="">Groups
+          <span class="nav-bar-links__dropdown-arrow">▾</span>
+        </a>
       {% endcall %}
+      </span>
+      <span class="nav-bar-links__item">
       {% call dropdown_menu(settings_menu_items, title='Settings', footer_item=signout_item) %}
-        <a class="nav-bar-links__item js-dropdown-menu-link"
+        <a class="nav-bar-links__link"
            href="{{ request.route_url("account") }}"
            title="Settings">
           {{ svg_icon('settings') }}
-      </a>
+          <span class="nav-bar-links__dropdown-arrow" href="">▾</span>
+        </a>
       {% endcall %}
+      </span>
       {% else %}
-      <a class="nav-bar-links__item" href="{{ request.route_url('login') }}">Log in</a>
-      <a class="nav-bar-links__item" href="{{ request.route_url('signup') }}">Sign up</a>
+      <a class="nav-bar-links__item nav-bar-links__link"
+         href="{{ request.route_url('login') }}">Log in</a>
+      <a class="nav-bar-links__item nav-bar-links__link"
+         href="{{ request.route_url('signup') }}">Sign up</a>
       {% endif %}
     </div>
   </div>

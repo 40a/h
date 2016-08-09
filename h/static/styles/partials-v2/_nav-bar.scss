@@ -36,15 +36,32 @@
   align-items: center;
 }
 
-// Links/menus displayed on the right-hand side of the nav bar
+// Containers for links and dropdown menus displayed on the right-hand side of
+// the nav bar
 .nav-bar-links__item {
-  @include font-normal;
-
   height: 18px;
   margin-left: 10px;
   margin-right: 10px;
+}
 
+// Link text for links on the right-side of the nav bar
+.nav-bar-links__link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  @include font-normal;
   color: $grey-5;
+}
+
+// Dropdown arrow indicator shown to the right of the 'Groups' and 'Settings'
+// menus
+.nav-bar-links__dropdown-arrow {
+  display: inline-block;
+  margin-left: 5px;
+
+  @include font-small;
+  color: $grey-4;
 }
 
 .nav-bar-links__item:first-child {

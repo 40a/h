@@ -9,8 +9,12 @@ function DropdownMenuController(element) {
 
   var handleClickOutside = function (event) {
     if (!contentEl.contains(event.target)) {
-      event.stopPropagation();
-      event.preventDefault();
+      // When clicking outside the menu on the toggle element, stop the event
+      // so that it does not re-trigger the menu
+      if (toggleEl.contains(event.target)) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
       contentEl.classList.remove('is-open');
       element.ownerDocument.removeEventListener('click', handleClickOutside,
         true /* capture */);
