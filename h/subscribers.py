@@ -15,8 +15,8 @@ def render_view(request, name):
     """
     Helper for rendering a view within another view.
 
-    This can be used to render a reusable widget across multiple pages or share
-    a widget
+    This can be used to render a reusable widget across multiple pages or
+    as a standalone view. The latter is useful for debugging/testing a widget.
 
     The rendered sub-view will use the same cookies, host and other properties
     as the parent request.
@@ -30,6 +30,11 @@ def render_view(request, name):
     # Adapted from http://stackoverflow.com/a/24199503/434243
     req = request.copy_get()
     req.path_info = request.route_path(name)
+
+    # Add a flag that views and templates can examine to determine whether they
+    # are being used in a subrequest
+    req.environ['is_subrequest'] = True
+
     response = request.invoke_subrequest(req, use_tweens=True)
     return Markup(response.ubody)
 

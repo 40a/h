@@ -1,0 +1,37 @@
+{#
+  Base template for reusable widgets that are used in multiple places on the
+  site.
+
+  Widgets should extend this template and define a "content" block which renders
+  the HTML markup for the widget.
+#}
+{% if request.environ.get('is_subrequest') %}
+{#
+  The widget is being used within another view, so just include the content of
+  the widget. The parent view is responsible for including all other assets that
+  the widget needs.
+#}
+{{ self.content() }}
+{% else %}
+{#
+  The widget is being used standalone as its own view, so the content is wrapped
+  in a stub HTML document which includes the styles and scripts that it
+  requires.
+#}
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    {% for url in asset_urls('site_v2_css') %}
+    <link rel="stylesheet" href="{{ url }}">
+    {% endfor %}
+  </head>
+  <body>
+    {{ self.content() }}
+    {% for url in asset_urls("site_js") %}
+    <script src="{{ url }}"></script>
+    {% endfor %}
+  </body>
+</html>
+{% endif %}

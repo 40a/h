@@ -1,5 +1,8 @@
+{% extends "../layouts/widget.html.jinja2" %}
+
 {% from '../includes/dropdown_menu.html.jinja2' import dropdown_menu %}
 
+{% block content %}
 {% if feature('activity_pages') %}
 <header class="nav-bar">
   <div class="nav-bar__content">
@@ -40,3 +43,4 @@
   </div>
 </header>
 {% endif %}
+{% endblock %}
