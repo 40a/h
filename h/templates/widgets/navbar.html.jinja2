@@ -20,10 +20,12 @@
 
     <div class="nav-bar-links">
       {% if username %}
-      <a class="nav-bar-links__item nav-bar-links__link"
-         href="{{ username_link }}">
-        {{ username }}
-      </a>
+      <span class="nav-bar-links__item">
+        <a class="nav-bar-links__link"
+           href="{{ username_link }}">
+          {{ username }}
+        </a>
+      </span>
       <span class="nav-bar-links__item">
       {% call dropdown_menu(groups_menu_items, title='Groups') %}
         <a class="nav-bar-links__link" href="">Groups
