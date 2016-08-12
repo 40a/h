@@ -48,7 +48,7 @@ describe('raven', function () {
       Raven.setDataCallback(fakeAngularTransformer);
     });
 
-    raven = proxyquire('../raven', noCallThru({
+    raven = proxyquire('../base/raven', noCallThru({
       'raven-js': fakeRavenJS,
       'raven-js/plugins/angular': fakeAngularPlugin,
     }));
